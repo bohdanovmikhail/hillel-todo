@@ -18,7 +18,7 @@ class ToDoListImpl extends React.Component<IProps, IState> {
 
   public render() {
     if (this.props.isLoading) {
-      return <Preloader/>;
+      return <Preloader />;
     }
 
     return (

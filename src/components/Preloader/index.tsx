@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 
 import styles from './index.module.scss';
 
-export function Preloader() {
+export function Preloader(props: IProps) {
   const [count, setCount] = useState(3);
 
   useEffect(() => {
     const timerID = setTimeout(() => {
-      setCount(count < 3 ? count + 1 : 0);
+      setCount(count < props.dotsCount ? count + 1 : 0);
     }, 300);
 
     return () => clearTimeout(timerID);
@@ -18,4 +18,12 @@ export function Preloader() {
       Loading{'.'.repeat(count)}
     </div>
   );
+}
+
+Preloader.defaultProps = {
+  dotsCount: 3,
+};
+
+interface IProps {
+  dotsCount?: number;
 }

@@ -5,7 +5,7 @@ import { createRequestAction } from '../_helpers';
 const sleep = t => new Promise(r => setTimeout(r, t));
 
 export const todoFetch = createRequestAction<ITodoItem[]>('TODO.FETCH', async () => {
-  await sleep(2000);
+  await sleep(5000);
   const result = await todoAPI.getAll();
   return result.data;
 });

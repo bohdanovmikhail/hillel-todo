@@ -10,25 +10,16 @@ export function createRequestAction<Result = void, RequestParams = void>(
   type: string,
   handler,
   separator: string = '.',
-): IRequestAction<RequestParams, Result> {
-  const startType: string = type + separator + 'START';
-  const successType: string = type + separator + 'SUCCESS';
-  const failureType: string = type + separator + 'FAILURE';
+): IRequestAction<RequestParams> {
+  actionCreator.START = type + separator + 'START';
+  actionCreator.SUCCESS = type + separator + 'SUCCESS';
+  actionCreator.FAILURE = type + separator + 'FAILURE';
 
-  const start = createAction(startType);
-  const success = createPayloadAction<Result>(successType);
-  const failure = createErrorAction(failureType);
+  const start = createAction(actionCreator.START);
+  const success = createPayloadAction<Result>(actionCreator.SUCCESS);
+  const failure = createErrorAction(actionCreator.FAILURE);
 
-  actionCreator.START = startType;
-  actionCreator.START_CREATOR = start;
-
-  actionCreator.SUCCESS = successType;
-  actionCreator.SUCCESS_CREATOR = success;
-
-  actionCreator.FAILURE = failureType;
-  actionCreator.FAILURE_CREATOR = failure;
-
-  return actionCreator as IRequestAction<RequestParams, Result>;
+  return actionCreator as IRequestAction<RequestParams>;
 
   function actionCreator(params: RequestParams) {
     return async (dispatch: Dispatch) => {
