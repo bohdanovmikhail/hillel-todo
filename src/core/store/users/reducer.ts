@@ -1,22 +1,21 @@
 import { combineReducers } from 'redux';
 
-import { ITodoItem } from '../../types';
-import { todoGetAll } from './actions';
-import { IToDoState } from './types';
+import { IUserItem } from '../../types';
+import { usersGetAll } from './actions';
+import { IUsersState } from './types';
 
-
-export default combineReducers<IToDoState>({
+export default combineReducers<IUsersState>({
   isLoading: isLoadingReducer,
   list: listReducer,
 });
 
 function isLoadingReducer(state: boolean = false, action): boolean {
   switch (action.type) {
-    case todoGetAll.START:
+    case usersGetAll.START:
       return true;
 
-    case todoGetAll.SUCCESS:
-    case todoGetAll.FAILURE:
+    case usersGetAll.SUCCESS:
+    case usersGetAll.FAILURE:
       return false;
 
     default:
@@ -24,9 +23,9 @@ function isLoadingReducer(state: boolean = false, action): boolean {
   }
 }
 
-function listReducer(state: ITodoItem[] = [], action): ITodoItem[] {
+function listReducer(state: IUserItem[] = [], action): IUserItem[] {
   switch (action.type) {
-    case todoGetAll.SUCCESS:
+    case usersGetAll.SUCCESS:
       return action.payload;
 
     default:

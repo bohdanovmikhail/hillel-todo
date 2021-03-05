@@ -1,8 +1,7 @@
 import { IUserItem } from '../types';
 import { BaseAPI } from './_BaseRESTAPI';
 
-
-export class TodoAPI
+export class UsersAPI
   extends BaseAPI<IUserItem> {
-  protected itemKey = 'todo';
+  protected itemKey: string = 'users';
 }

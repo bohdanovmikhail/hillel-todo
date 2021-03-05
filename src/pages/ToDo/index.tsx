@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { selectToDoList, todoCreate, todoDelete, todoFetch, todoUpdate } from '../../core/store/todo';
+import {
+  todoGetAll,
+  todoCreate,
+  todoUpdate,
+  todoDelete,
+  selectToDoList,
+} from '../../core/store/todo';
 import { selectToDoIsLoading } from '../../core/store/todo';
 import { ITodoItem } from '../../core/types';
 import { Preloader } from '../../components/Preloader';
@@ -35,7 +41,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = {
-  getAllRecords: todoFetch,
+  getAllRecords: todoGetAll,
   addRecord: todoCreate,
   updateRecord: todoUpdate,
   deleteRecord: todoDelete,
@@ -46,7 +52,7 @@ export default connect(mapState, mapDispatch)(ToDoListImpl);
 interface IProps {
   isLoading: boolean;
   records: ITodoItem[];
-  getAllRecords: typeof todoFetch;
+  getAllRecords: typeof todoGetAll;
 }
 
 interface IState {
