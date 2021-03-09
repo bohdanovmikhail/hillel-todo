@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { ITodoItem } from '../../types';
-import { todoGetAll } from './actions';
+import { todoGetAll, todoUpdate, todoDelete } from './actions';
 import { IToDoState } from './types';
 
 
@@ -28,6 +28,18 @@ function listReducer(state: ITodoItem[] = [], action): ITodoItem[] {
   switch (action.type) {
     case todoGetAll.SUCCESS:
       return action.payload;
+
+    case todoUpdate.SUCCESS:
+      return state.map(item => {
+        if (item.id === action.payload.id) {
+          return action.payload;
+        }
+
+        return item;
+      });
+
+    case todoDelete.SUCCESS:
+      return state.filter(todo => todo.id !== action.payload.id);
 
     default:
       return state;

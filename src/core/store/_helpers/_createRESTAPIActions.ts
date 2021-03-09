@@ -19,12 +19,12 @@ export function createRESTAPIActions<APIItem extends IBaseItem>(
   );
 
   const updateAction = createRequestAction<APIItem, APIItem>(
-    baseActionType + '/CREATE',
+    baseActionType + '/UPDATE',
     (item: APIItem) => api.update(item),
   );
 
   const deleteAction = createRequestAction<APIItem, APIItem>(
-    baseActionType + '/CREATE',
+    baseActionType + '/DELETE',
     (item: APIItem) => api.delete(item),
   );
 

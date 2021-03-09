@@ -9,6 +9,7 @@ export class TodoList extends React.Component<IProps, IState> {
   public state: IState = {
     filter: null,
     editItemID: null,
+    editItemText: null,
   };
 
   public render() {
@@ -60,27 +61,75 @@ export class TodoList extends React.Component<IProps, IState> {
 
   private renderTodoItem(item: ITodoItem) {
     if (this.state.editItemID === item.id) {
-      return null;
+      return (
+        <div key={item.id}>
+          <input
+            type="text"
+            value={this.state.editItemText}
+            onChange={event => this.setState({ editItemText: event.target.value })}
+          />
+
+          <button onClick={() => this.saveItem()}>Save</button>
+          <button onClick={() => this.cancelEdit()}>Cancel</button>
+        </div>
+      );
     }
 
     return (
-      <TodoItem
-        key={item.id}
-        item={item}
-      />
+      <div key={item.id}>
+        <TodoItem
+          item={item}
+        />
+
+        <button onClick={() => this.editItem(item)}>Edit</button>
+        <button onClick={() => this.props.removeItem(item)}>x</button> 
+      </div>
     );
   }
 
   private clickFilterButton(filter): void {
     this.setState({ filter });
   }
+
+  private editItem(item: ITodoItem) {
+    this.setState({
+      editItemID: item.id,
+      editItemText: item.text,
+    });
+  }
+
+  private saveItem() {
+    const item = this.props.list.find(item => item.id === this.state.editItemID);
+
+    if (!item) {
+      this.cancelEdit();
+      return;
+    }
+
+    this.props.updateItem({
+      ...item,
+      text: this.state.editItemText,
+    });
+
+    this.cancelEdit();
+  }
+
+  private cancelEdit() {
+    this.setState({
+      editItemID: null,
+      editItemText: null,
+    });
+  }
 }
 
 interface IProps {
   list: ITodoItem[];
+  updateItem: (item: ITodoItem) => void;
+  removeItem: (item: ITodoItem) => void;
 }
 
 interface IState {
   filter: boolean;
   editItemID: string;
+  editItemText: string;
 }

@@ -11,6 +11,7 @@ import { selectToDoIsLoading } from '../../core/store/todo';
 import { ITodoItem } from '../../core/types';
 import { Preloader } from '../../components/Preloader';
 import { TodoList } from './components/TodoList';
+import { todoAPI } from '../../core/api';
 
 
 class ToDoListImpl extends React.Component<IProps, IState> {
@@ -20,6 +21,11 @@ class ToDoListImpl extends React.Component<IProps, IState> {
 
   public componentDidMount() {
     this.props.getAllRecords();
+
+    todoAPI.getAll()
+      .then(result => {
+        console.log(result);
+      });
   }
 
   public render() {
@@ -29,7 +35,11 @@ class ToDoListImpl extends React.Component<IProps, IState> {
 
     return (
       <div>
-        <TodoList list={this.props.records} />
+        <TodoList
+          list={this.props.records}
+          updateItem={item => this.props.updateRecord(item)}
+          removeItem={item => this.props.deleteRecord(item)}
+        />
       </div>
     );
   }
@@ -53,6 +63,8 @@ interface IProps {
   isLoading: boolean;
   records: ITodoItem[];
   getAllRecords: typeof todoGetAll;
+  updateRecord: (item: ITodoItem) => void;
+  deleteRecord: (item: ITodoItem) => void;
 }
 
 interface IState {

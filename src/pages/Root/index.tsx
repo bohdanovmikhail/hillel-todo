@@ -13,8 +13,8 @@ export function Root() {
 
       <Container>
         <Switch>
-          <Route path="/" exact component={MainPage}/>
           <Route path="/todo" component={ToDoList}/>
+          <Route path="/" component={MainPage}/>
         </Switch>
       </Container>
     </div>
